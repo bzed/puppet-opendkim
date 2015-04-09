@@ -30,7 +30,7 @@ class opendkim::config(
   $oversignheaders         = $opendkim::params::oversignheaders,
 ) inherits ::opendkim::params {
 
-  concat { ['/etc/opendkim.conf', '/etc/default/opendkim', '/etc/opendkim_keytable.conf', '/etc/opendkim_signingtable.conf']:
+  concat { ['/etc/opendkim.conf', '/etc/default/opendkim', '/etc/opendkim/KeyTable', '/etc/opendkim/SigningTable']:
     owner  => root,
     group  => root,
     mode   => '0644',
@@ -58,12 +58,12 @@ class opendkim::config(
       order   => 02;
 
     'opendkim keytable header':
-      target  => '/etc/opendkim_keytable.conf',
+      target  => '/etc/opendkim/KeyTable',
       content => "###### MANAGED BY PUPPET\n",
       order   => 01;
 
     'opendkim signing table header':
-      target  => '/etc/opendkim_signingtable.conf',
+      target  => '/etc/opendkim/SigningTable',
       content => "###### MANAGED BY PUPPET\n",
       order   => 01;
   }
