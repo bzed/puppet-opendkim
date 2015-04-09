@@ -56,12 +56,12 @@ define opendkim::domain(
   if( ! defined( Concat::Fragment['opendkim_domain_config'] ) ) {
     concat::fragment{ 'opendkim_domain_config':
       target  => '/etc/opendkim.conf',
-      content => "Keytable /etc/opendkim_keytable.conf\nSigningTable /etc/opendkim_signingtable.conf\n\n",
+      content => "Keytable /etc/opendkim/KeyTable\nSigningTable /etc/opendkim/SigningTable\n\n",
     }
   }
 
   concat::fragment{ "signingtable_${name}":
-    target  => '/etc/opendkim_signingtable.conf',
+    target  => '/etc/opendkim/SigningTable',
     content => "${signing_key} ${selector}._domainkey.${domain}\n",
     order   => 10,
     require => File[$key_file],
