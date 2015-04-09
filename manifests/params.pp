@@ -45,6 +45,8 @@ class opendkim::params {
   $syslog_success = 'false'
   $umask  = '002'
   $oversignheaders = 'From'
+  $log_why = 'false'
+  $signature_algorithm = 'rsa-sha256'
 
   case $::operatingsystem {
     'Ubuntu', 'Debian': {

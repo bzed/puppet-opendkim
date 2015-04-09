@@ -26,11 +26,14 @@
 class opendkim::config(
   $syslog                  = $opendkim::params::syslog,
   $syslog_success          = $opendkim::params::syslog_success,
+  $log_why                 = $opendkim::params::log_why,
   $umask                   = $opendkim::params::umask,
   $oversignheaders         = $opendkim::params::oversignheaders,
+  $signature_algorithm     = $opendkim::params::signature_algorithm,
 ) inherits ::opendkim::params {
 
-  concat { ['/etc/opendkim.conf', '/etc/default/opendkim', '/etc/opendkim/KeyTable', '/etc/opendkim/SigningTable']:
+  concat { ['/etc/opendkim.conf', '/etc/default/opendkim', '/etc/opendkim/KeyTable', '/etc/opendkim/SigningTable',
+            '/etc/opendkim/TrustedHosts' ]:
     owner  => root,
     group  => root,
     mode   => '0644',
