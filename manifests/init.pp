@@ -42,11 +42,18 @@ class opendkim(
     enable  => true,
     require => Package['opendkim'];
   }
-  file { '/etc/dkim':
+  file { '/etc/opendkim':
     ensure => 'directory',
     owner  => 'root',
     group  => 'root',
     mode   => '0644';
+  }
+  file { $key_folder :
+    ensure  => directory,
+    owner   => $::opendkim::params::user,
+    group   => $::opendkim::params::user,
+    mode    => '0600',
+    require => Package[$::opendkim::params::package]
   }
   if ($default_config) {
     include opendkim::config
