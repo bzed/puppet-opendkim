@@ -69,5 +69,10 @@ class opendkim::config(
       target  => '/etc/opendkim/SigningTable',
       content => "###### MANAGED BY PUPPET\n",
       order   => 01;
+
+    'trust localhost':
+      target  => '/etc/opendkim/TrustedHosts',
+      content => "localhost\n",
+      order   => 01;
   }
 }

@@ -3,7 +3,7 @@ define opendkim::trustedhost(
 ) {
     concat::fragment { "trustedhost_${trustedhost}" :
         target  => '/etc/opendkim/TrustedHosts',
-        content => $trustedhost
+        content => "${trustedhost}\n"
     }
 }
 
