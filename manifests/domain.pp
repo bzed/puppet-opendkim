@@ -32,7 +32,7 @@ define opendkim::domain(
   $private_key_content = undef,
   $domain              = $name,
   $selector            = 'mail',
-  $key_folder          = '/etc/dkim',
+  $key_folder          = '/etc/opendkim/keys',
   $signing_key         = $name,
   $user                = $opendkim::params::user,
 ) {
