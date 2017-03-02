@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'opendkim::socket', :type => :define do
 
+    #let(:name) { 'example.com' }
     let(:title) { 'inet:8891@localhost' }
 
     let(:default_params) do

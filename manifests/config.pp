@@ -13,9 +13,6 @@
 # [*oversignheaders*]
 #   Inherited from params class.
 #
-# [*internalhosts*]
-#   Inherited from params class.
-#
 # === Examples
 #
 #   See opendkim init for complete example.

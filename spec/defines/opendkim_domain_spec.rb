@@ -7,37 +7,31 @@ describe 'opendkim::domain', :type => :define do
 
     let(:default_params) do
         {
-                :private_key_source => 'puppet:///path/to/example.com.key',
+                :private_key => 'puppet:///path/to/example.com.key',
         }
     end
 
-    let(:pre_condition) { 'include ::opendkim'}
-
-    describe 'for example.com domain with custom selector' do
+    describe 'for example.com domain config' do
         let(:params) do
             default_params.merge( {
-                :selector    => 'testselector',
+                #:private_key => 'puppet:///path/to/example.com.key',
+                :selector    => 'testselector'
             } )
         end
         it do
-            should contain_file('/etc/dkim/testselector-example.com.key').with(
+            should contain_file('/etc/dkim/example.com.key').with(
                 :source => 'puppet:///path/to/example.com.key',
-                :owner  => 'opendkim',
+                :owner  => 'root',
                 :group  => 'root',
-                :mode   => '0600',
+                :mode   => '0640'
             )
         end
         it do
-            should contain_concat__fragment('keytable_example.com').with(
-                'target'  => '/etc/opendkim_keytable.conf',
-                'content' => %r{^testselector._domainkey.example.com\sexample.com:testselector:/etc/dkim/testselector-example.com.key}m,
+            should contain_concat__fragment('example.com').with(
+                'target'  => '/etc/opendkim.conf',
+                'content' => %r{^Domain\sexample.com[^#]*KeyFile\s/etc/dkim/example.com.key[^#]*Selector\stestselector}m
+                #'content' => %r{^Domain\sexample.com}
             )
-        end
-        it do
-          should contain_concat__fragment('signingtable_example.com').with(
-            'target'  => '/etc/opendkim_signingtable.conf',
-            'content' => %r{^example.com\stestselector._domainkey.example.com}m,
-          )
         end
     end
 end

@@ -35,20 +35,13 @@ define opendkim::domain(
   $signing_key = $name,
   $user        = $opendkim::params::user,
 ) {
-
-  if (empty($private_key_source) and empty($private_key_content)) {
-    fail('one of private_key_source or private_key_content must be not empty!')
-  }
-
-  $key_file = "${key_folder}/${selector}-${domain}.key"
+  $key_file = "${key_folder}/$selector-${domain}.key"
 
   file { $key_file:
-      ensure  => file,
-      owner   => $user,
-      group   => 'root',
-      mode    => '0600',
-      source  => $private_key_source,
-      content => $private_key_content;
+      owner  => $user,
+      group  => 'root',
+      mode   => 0600,
+      source => $private_key;
   }
 
   # Add keytable and signing table to config, but only once
