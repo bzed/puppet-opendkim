@@ -28,13 +28,12 @@
 #
 
 define opendkim::domain(
-  $private_key_source  = undef,
-  $private_key_content = undef,
-  $domain              = $name,
-  $selector            = 'mail',
-  $key_folder          = '/etc/opendkim/keys',
-  $signing_key         = $name,
-  $user                = $opendkim::params::user,
+  $private_key,
+  $domain      = $name,
+  $selector    = 'mail',
+  $key_folder  = '/etc/opendkim/keys',
+  $signing_key = $name,
+  $user        = $opendkim::params::user,
 ) {
 
   if (empty($private_key_source) and empty($private_key_content)) {
@@ -67,8 +66,8 @@ define opendkim::domain(
     require => File[$key_file],
   }
   concat::fragment{ "keytable_${name}":
-    target  => '/etc/opendkim_keytable.conf',
-    content => "${selector}._domainkey.${domain} ${domain}:${selector}:${key_file}\n",
+    target  => '/etc/opendkim/KeyTable',
+    content => "${selector}._domainkey.${domain} ${domain}:${selector}:$key_file\n",
     order   => 10,
     require => File[$key_file],
   }

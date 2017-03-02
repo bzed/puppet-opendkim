@@ -29,12 +29,14 @@
 class opendkim::config(
   $syslog                  = $opendkim::params::syslog,
   $syslog_success          = $opendkim::params::syslog_success,
+  $log_why                 = $opendkim::params::log_why,
   $umask                   = $opendkim::params::umask,
   $oversignheaders         = $opendkim::params::oversignheaders,
-  $internalhosts           = $opendkim::params::internalhosts,
+  $signature_algorithm     = $opendkim::params::signature_algorithm,
 ) inherits ::opendkim::params {
 
-  concat { ['/etc/opendkim.conf', '/etc/default/opendkim', '/etc/opendkim/KeyTable', '/etc/opendkim/SigningTable']:
+  concat { ['/etc/opendkim.conf', '/etc/default/opendkim', '/etc/opendkim/KeyTable', '/etc/opendkim/SigningTable',
+            '/etc/opendkim/TrustedHosts' ]:
     owner  => root,
     group  => root,
     mode   => '0644',
@@ -69,6 +71,11 @@ class opendkim::config(
     'opendkim signing table header':
       target  => '/etc/opendkim/SigningTable',
       content => "###### MANAGED BY PUPPET\n",
+      order   => 01;
+
+    'trust localhost':
+      target  => '/etc/opendkim/TrustedHosts',
+      content => "localhost\n",
       order   => 01;
   }
 }

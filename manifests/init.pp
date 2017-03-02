@@ -48,7 +48,7 @@ class opendkim(
     group  => 'root',
     mode   => '0644';
   }
-  file { $key_folder :
+  file { '/etc/opendkim/keys' :
     ensure  => directory,
     owner   => $::opendkim::params::user,
     group   => $::opendkim::params::user,
