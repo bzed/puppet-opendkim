@@ -35,12 +35,12 @@ define opendkim::domain(
   $signing_key = $name,
   $user        = $opendkim::params::user,
 ) {
-  $key_file = "${key_folder}/$selector-${domain}.key"
+  $key_file = "${key_folder}/${selector}-${domain}.key"
 
   file { $key_file:
       owner  => $user,
       group  => 'root',
-      mode   => 0600,
+      mode   => '0600',
       source => $private_key;
   }
 
@@ -55,13 +55,13 @@ define opendkim::domain(
   concat::fragment{ "signingtable_${name}":
     target  => '/etc/opendkim/SigningTable',
     content => "${signing_key} ${selector}._domainkey.${domain}\n",
-    order   => 10,
+    order   => '10',
     require => File[$key_file],
   }
   concat::fragment{ "keytable_${name}":
     target  => '/etc/opendkim/KeyTable',
-    content => "${selector}._domainkey.${domain} ${domain}:${selector}:$key_file\n",
-    order   => 10,
+    content => "${selector}._domainkey.${domain} ${domain}:${selector}:${key_file}\n",
+    order   => '10',
     require => File[$key_file],
   }
 }

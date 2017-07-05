@@ -7,18 +7,18 @@
 # /usr/share/doc/opendkim/examples/opendkim.conf.sample.
 
 # Log to syslog
-<% if @syslog != false %>Syslog <%= @syslog %><% end %>
-<% if @syslog_success != false %>SyslogSuccess <%= @syslog_success %><% end %>
-<% if @log_why != false %>LogWhy <%= @log_why %><% end %>
+<% if @syslog != "false" %>Syslog <%= @syslog %><% end %>
+<% if @syslog_success != "false" %>SyslogSuccess <%= @syslog_success %><% end %>
+<% if @log_why != "false" %>LogWhy <%= @log_why %><% end %>
 # Required to use local socket with MTAs that access the socket as a non-
 # privileged user (e.g. Postfix)
-<% if @umask != false %>UMask <%= @umask %><% end %>
+<% if @umask != "false" %>UMask <%= @umask %><% end %>
 
 # Trusted Hosts
 ExternalIgnoreList /etc/opendkim/TrustedHosts
 InternalHosts /etc/opendkim/TrustedHosts
 
-<% if @hashing_algorithm %>
+<% if @signature_algorithm %>
 # Hashing Algorithm
 SignatureAlgorithm <%= @signature_algorithm %>
 <% end %>
@@ -34,7 +34,7 @@ SignatureAlgorithm <%= @signature_algorithm %>
 # and the verifier.  From is oversigned by default in the Debian pacakge
 # because it is often the identity key used by reputation systems and thus
 # somewhat security sensitive.
-<% if @oversignheaders != false %>OversignHeaders <%= @oversignheaders %><% end %>
+<% if @oversignheaders != "false" %>OversignHeaders <%= @oversignheaders %><% end %>
 
 # List domains to use for RFC 6541 DKIM Authorized Third-Party Signatures
 # (ATPS) (experimental)

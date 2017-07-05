@@ -67,7 +67,7 @@ define opendkim::socket(
   concat::fragment{ $socket:
     target  => '/etc/opendkim.conf',
     content => "#Specify the working socket\nSocket ${socket}\n# (${name})\n",
-    order   => 09;
+    order   => '09';
   }
 }
 
