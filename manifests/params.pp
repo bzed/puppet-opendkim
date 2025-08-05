@@ -48,14 +48,14 @@ class opendkim::params {
   $log_why = 'false'
   $signature_algorithm = 'rsa-sha256'
 
-  case $::operatingsystem {
+  case $facts['os']['family'] {
     'Ubuntu', 'Debian': {
       $package = 'opendkim'
       $service = 'opendkim'
       $user    = 'opendkim'
     }
     default: {
-      fail("Unsupported operatingsystem ${::operatingsystem}, fork me baby.")
+      fail("Unsupported operatingsystem ${facts['os']['family']}, fork me baby.")
     }
   }
 }
